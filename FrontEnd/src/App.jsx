@@ -1,12 +1,19 @@
 import "./App.css";
 import "prismjs/themes/prism-tomorrow.css";
 import prism from "prismjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Editor from "react-simple-code-editor";
 
 function App() {
+  const [code, setCode] = useState(""); // Initialize code state with an empty string
   useEffect(() => {
     prism.highlightAll();
-  });
+  }, []); // Add dependency array to useEffect
+
+  async function reviewCode() {
+    axios.post;
+  }
 
   return (
     <>
@@ -14,19 +21,32 @@ function App() {
         <h1 className="text-2xl">Code Review Platform</h1>
       </header>
       <main className="w-full h-screen flex">
-        <div className="left w-[50%] h-screen bg-gray-900 text-white p-4">
-          <div className="code-editor h-full rounded-lg border border-gray-700 p-4">
-            <h2 className="text-xl mb-4">Write your code here</h2>
-            <pre className="h-[70%] overflow-auto">
-              <code className="language-javascript">
-                {`function sum() {
-  return 1 + 1;
-}`}
-              </code>
-            </pre>
+        <div className="left w-[50%] h-screen bg-black text-white p-4">
+          <div className="code-editor h-full rounded-lg border border-black p-4">
+            <h2 className="text-xl mb-4 text-center text-slate-400">
+              Write your code here
+            </h2>
+            <Editor
+              value={code}
+              onValueChange={(code) => setCode(code)}
+              highlight={(code) =>
+                prism.highlight(code, prism.languages.javascript, "javascript")
+              }
+              style={{
+                fontFamily: '"Fira code", "Fira Mono", monospace',
+                fontSize: 20,
+                border: "",
+                borderRadius: "4px",
+                height: "100%",
+                width: "100%",
+              }}
+            />
           </div>
           <div className="review-btn">
-            <button className="text-black bg-white px-5 py-2 rounded-lg">
+            <button
+              onClick={reviewCode}
+              className="text-black bg-white px-5 py-2 rounded-lg"
+            >
               Review
             </button>
           </div>
