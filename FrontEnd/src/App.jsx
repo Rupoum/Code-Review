@@ -4,15 +4,25 @@ import prism from "prismjs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Editor from "react-simple-code-editor";
+import Markdown from "react-markdown";
 
 function App() {
-  const [code, setCode] = useState(""); // Initialize code state with an empty string
+  const [code, setCode] = useState("");
+  const [review, setReview] = useState("");
+
   useEffect(() => {
     prism.highlightAll();
   }, []); // Add dependency array to useEffect
 
   async function reviewCode() {
-    axios.post;
+    try {
+      const response = await axios.post("http://localhost:3000/ai/get-review", {
+        code,
+      });
+      setReview(response.data);
+    } catch (error) {
+      console.error("Error reviewing code:", error);
+    }
   }
 
   return (
@@ -51,11 +61,21 @@ function App() {
             </button>
           </div>
         </div>
-        <div className="right w-[50%] h-screen bg-gray-100 p-4">
-          <div className="review-output h-full rounded-lg border border-gray-300 p-4">
+        <div
+          className="right w-[50%] h-screen bg-gray-800 
+        text-white p-4 overflow-auto
+        
+        "
+        >
+          <div
+            className="review-output h-full 
+          bg-gray-800
+          
+          p-4"
+          >
             <h2 className="text-xl mb-4">Review Output</h2>
             <div className="output-content h-full overflow-auto">
-              {/* This is where the review output will be displayed */}
+              <Markdown>{review}</Markdown>
             </div>
           </div>
         </div>
