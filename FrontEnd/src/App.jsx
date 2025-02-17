@@ -76,6 +76,7 @@ function App() {
             <h2 className="text-xl mb-4">Review Output</h2>
             <div className="output-content h-full overflow-auto">
               <Markdown>{review}</Markdown>
+              <Markdown>{review}</Markdown>
             </div>
           </div>
         </div>
